@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>You Have Been Phished!</title>
+  <!-- Crucial for mobile responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>You Have Been Phished!</title>
+
   <style>
     /* 
-      ============================
-      GLOBAL STYLES & VARIABLES
-      ============================
+      ===========================================
+      GLOBAL STYLES & COLOR VARIABLES
+      ===========================================
     */
     :root {
       --fortinet-red: #EE3031;
       --fortinet-gray: #425152;
-      --dark-bg: #1a1a1a;
+      --dark-bg: #000;
       --light-bg: #f8f8f8;
       --font-main: "Helvetica Neue", Helvetica, sans-serif;
     }
@@ -26,14 +29,15 @@
 
     body {
       font-family: var(--font-main);
-      overflow: hidden;  /* Hide scrollbars to maintain the immersive effect */
-      background: #000;
+      overflow: hidden; /* Hide scroll to preserve immersive feel */
+      background: var(--dark-bg);
     }
 
-    /*
-      ============================================
-      ANIMATED BACKGROUND (Swirling Gradient)
-      ============================================
+    /* 
+      ===============================
+      ANIMATED BACKGROUND
+      ===============================
+      A swirling gradient that shifts colors over time.
     */
     body::before {
       content: "";
@@ -49,24 +53,19 @@
       );
       background-size: 400% 400%;
       animation: swirl 20s ease-in-out infinite;
-      z-index: -2;
+      z-index: -2; /* behind main content */
     }
     @keyframes swirl {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    /*
-      =================================
-      HORIZONTAL SCAN LINES (subtle)
-      =================================
+    /* 
+      ===========================================
+      SCAN-LINE OVERLAY
+      ===========================================
+      Subtle flickering lines for a "monitor" vibe.
     */
     body::after {
       content: "";
@@ -78,88 +77,71 @@
         to bottom,
         rgba(255,255,255,0.03) 0px,
         rgba(255,255,255,0.03) 1px,
-        transparent 2px,
-        transparent 3px
+        transparent 3px,
+        transparent 5px
       );
       animation: flicker 3s infinite;
-      z-index: -1;
+      z-index: -1; /* behind content, above swirl */
     }
     @keyframes flicker {
-      0%, 5%, 12%, 15%, 25%, 36%, 45%, 55%, 65%, 75%, 85%, 95% {
-        opacity: 1;
-      }
-      1%, 6%, 14%, 16%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% {
-        opacity: 0.8;
-      }
+      0%, 5%, 12%, 15%, 25%, 36%, 45%, 55%, 65%, 75%, 85%, 95% { opacity: 1; }
+      1%, 6%, 14%, 16%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% { opacity: 0.85; }
     }
 
-    /*
-      =================================================
-      MAIN CONTAINER: Centered text & Fortinet logo
-      =================================================
+    /* 
+      ==============================================
+      MAIN CONTAINER: Centered message and content
+      ==============================================
     */
     .container {
       position: relative;
-      width: 100vw;
-      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      width: 100vw;
+      height: 100vh;
       color: #fff;
+      padding: 0 1rem; /* small horizontal padding for mobile */
     }
 
-    /* Fortinet logo in the corner (optional) */
+    /* Optional: Fortinet Logo in corner (base64-encoded sample) */
     .fortinet-logo {
       position: absolute;
       top: 20px; right: 20px;
       width: 180px;
-      opacity: 0.75;
+      opacity: 0.8;
       transition: opacity 0.3s;
     }
     .fortinet-logo:hover {
       opacity: 1;
     }
 
-    /*
-      ====================================
-      GLITCH TITLE
-      ====================================
+    /* 
+      ===============================
+      GLITCHY MAIN TITLE
+      ===============================
     */
     h1.glitch-text {
       font-size: 3rem;
       margin-bottom: 1rem;
       text-transform: uppercase;
-      position: relative;
       animation: glitch 1s infinite;
     }
-
     @keyframes glitch {
-      0% {
-        text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff;
-      }
-      20% {
-        text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff;
-      }
-      40% {
-        text-shadow: 2px -2px 0 var(--fortinet-red), -2px 2px 0 #00f0ff;
-      }
-      60% {
-        text-shadow: -2px 2px 0 var(--fortinet-red), 2px -2px 0 #00f0ff;
-      }
-      80% {
-        text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff;
-      }
-      100% {
-        text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff;
-      }
+      0%   { text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff; }
+      20%  { text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff; }
+      40%  { text-shadow: 2px -2px 0 var(--fortinet-red), -2px 2px 0 #00f0ff; }
+      60%  { text-shadow: -2px 2px 0 var(--fortinet-red), 2px -2px 0 #00f0ff; }
+      80%  { text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff; }
+      100% { text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff; }
     }
 
-    /*
-      ====================================
-      SUBTITLE with Flicker + Slide-In
-      ====================================
+    /* 
+      ===============================
+      SUBTITLE APPEAR
+      ===============================
     */
     .subtitle {
       font-size: 1.2rem;
@@ -168,59 +150,44 @@
       animation: subtitleAppear 2s forwards 0.5s;
     }
     @keyframes subtitleAppear {
-      0% {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      60% {
-        transform: translateY(-5px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      0%   { transform: translateY(20px); opacity: 0; }
+      60%  { transform: translateY(-5px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
-    /*
-      ==========================================
-      CTA (Call-To-Action) - "Get FortiPoint..."
-      ==========================================
+    /* 
+      =================================
+      CALL-TO-ACTION BUTTON
+      =================================
     */
     .cta {
       display: inline-block;
-      margin-top: 1rem;
       padding: 0.75rem 1.5rem;
       background: var(--fortinet-red);
       color: #fff;
-      text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: bold;
       font-size: 1rem;
       border-radius: 4px;
+      text-decoration: none;
       box-shadow: 0 0 8px rgba(238,48,49,0.5);
-      position: relative;
-      overflow: hidden;
       animation: ctaPulse 2.5s infinite alternate;
-    }
-    @keyframes ctaPulse {
-      0% {
-        box-shadow: 0 0 8px rgba(238,48,49,0.5);
-      }
-      100% {
-        box-shadow: 0 0 20px rgba(238,48,49,0.9);
-      }
     }
     .cta:hover {
       background: #f53536;
       box-shadow: 0 0 20px rgba(238,48,49,1);
     }
+    @keyframes ctaPulse {
+      0%   { box-shadow: 0 0 8px rgba(238,48,49,0.5); }
+      100% { box-shadow: 0 0 20px rgba(238,48,49,0.9); }
+    }
 
-    /*
-      ===================================================
-      FLOATING CYBER-LINES (Animated with JavaScript)
-      ===================================================
+    /* 
+      ====================================================
+      FLOATING CYBER LINES
+      ====================================================
+      We'll spawn these with JavaScript for a dynamic effect.
     */
     .cyber-line {
       position: absolute;
@@ -230,82 +197,94 @@
       background-color: #fff;
       opacity: 0.3;
       animation-timing-function: linear;
-      z-index: 1;
+      z-index: 1; /* Over gradient, behind text */
     }
-
-    /* Keyframes for lines to move from left -> right or right -> left */
     @keyframes lineSlideLtoR {
-      0% { transform: translateX(-100vw); }
+      0%   { transform: translateX(-100vw); }
       100% { transform: translateX(100vw); }
     }
     @keyframes lineSlideRtoL {
-      0% { transform: translateX(100vw); }
+      0%   { transform: translateX(100vw); }
       100% { transform: translateX(-100vw); }
     }
 
-    /* Responsive adjustments */
+    /* 
+      ==============================================
+      MEDIA QUERY FOR SMALL SCREENS (IPHONE, ETC.)
+      ==============================================
+    */
     @media(max-width: 600px){
       h1.glitch-text {
         font-size: 2rem;
       }
       .subtitle {
         font-size: 1rem;
+        margin-bottom: 2rem;
       }
       .cta {
         font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
       }
       .fortinet-logo {
         width: 120px;
+        top: 10px;
+        right: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- MAIN CONTAINER -->
+
   <div class="container">
-    <!-- (Optional) Fortinet Logo in corner -->
+    <!-- Example Fortinet Logo in top-right corner (optional) -->
     <img 
       src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjcwIiB2aWV3Qm94PSIwIDAgMjUwIDcwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcwLjYxMyAwSDBWNzBIMTAuMlYyMy45NzJIMzAuMzMwNFY0Ni4yMjNIMzkuOTY4NVYyMy45NzJINzAuNjEzVjBIMzAuMzMxNEgxMC4yMDlWMjMuOTcySDBWMzAuNzExNUgzMC4zMzE0VjcwSDcwLjYxM1YwWiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTc5LjM4NyAwSDExOS42OTVWMjMuOTcySDg5LjA3ODRWNDYuMjIzSDc5LjM4N1YyMy45NzJINzkuMzg2OTNINzkuMzg3VjBINTkuNzQ1OVg3OS4zODdIMTE5LjY5NVY3MEg3OS4zODdWMzAuNzExNUg1OS43NDU5TDc5LjM4NyAzMC43MTE1VjBIMzAuMzMxNFYyMy45NzJBMTAuMjA5LDIzLjk3MiAwIDAsMCAzMC4zMzE0LDIzLjk3MkgxMC4yMDlWMzAuNzExNVpNMTI5LjUzOCAwaDUwLjEwM3YyMy45NzJoMjkuNjYxNnYyMi4yNTFoOS43NjI2VjIzLjk3MkgxNzkuNjQxVjBoLTMwLjA4MzRIMTI5LjUzOFYwWk0xMjkuNTM4IDMwLjcxMTVIMTQ5LjUgMzAuNzExNXY1LjUwMDNIMTI5LjUzOFYzMC43MTE1WiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEyOS41MzggMzAuNzExNVY0Ni4yMjNIMTI5LjUzOFY2OUgxNDUuMDM3VjQ2LjIyM0gxNzkuNjQxVjMwLjcxMTVIMTU5LjY1N3Y1LjUwMDNIMTQ5LjUsMzAuNzExNVoiPjwvcGF0aD4KPC9zdmc+" 
       alt="Fortinet Logo" 
       class="fortinet-logo"
     />
 
-    <!-- GLITCHY HEADING -->
+    <!-- Main Title -->
     <h1 class="glitch-text">You Have Been Phished!</h1>
+    
+    <!-- Subtitle / Tagline -->
+    <div class="subtitle">
+      Don’t be the next cyber statistic.
+    </div>
 
-    <!-- SUBTITLE -->
-    <div class="subtitle">Don’t be a victim of cyber threats.</div>
-
-    <!-- CTA -->
-    <a href="#" class="cta">Get FortiPoint Advanced Email Security</a>
+    <!-- CTA Button -->
+    <a href="#" class="cta">
+      Get FortiPoint Advanced Email Security
+    </a>
   </div>
 
   <script>
     /*
-      ============================
-      FLOATING “CYBER LINES”
-      ============================
-      This script randomly creates horizontal lines that
-      zoom across the screen, giving a dynamic, cyber feel.
+      ======================================================
+      DYNAMIC “CYBER LINES”
+      ======================================================
+      We'll generate a few horizontal lines that
+      slide left-to-right or right-to-left for a
+      futuristic vibe.
     */
-    const lineCount = 8; // How many lines to animate
-    for(let i=0; i < lineCount; i++){
+    const lineCount = 8; // Adjust how many lines you want
+    for (let i = 0; i < lineCount; i++) {
       createCyberLine();
     }
 
-    function createCyberLine(){
+    function createCyberLine() {
       const line = document.createElement('div');
       line.className = 'cyber-line';
-      // Random vertical position
+      // Random vertical position (0-100% of viewport height)
       line.style.top = Math.random() * 100 + 'vh';
-      // Random width (some lines short, some full)
-      line.style.width = (50 + Math.random()*50) + 'vw';
+      // Random line width (some short, some long)
+      line.style.width = (40 + Math.random()*60) + 'vw';
 
-      // Decide direction: 0 => L->R, 1 => R->L
+      // Random direction: 0 => L->R, 1 => R->L
       const direction = Math.round(Math.random());
-      const duration = 3 + Math.random()*4; // 3s to 7s
+      // Duration between 3s and 7s
+      const duration = 3 + Math.random() * 4;
 
-      if(direction === 0){
+      if (direction === 0) {
         line.style.animation = `lineSlideLtoR ${duration}s infinite`;
       } else {
         line.style.animation = `lineSlideRtoL ${duration}s infinite`;
@@ -313,9 +292,8 @@
 
       document.body.appendChild(line);
 
-      // Respawn or reposition line after it finishes
+      // On each animation iteration, reposition the line
       line.addEventListener('animationiteration', () => {
-        // Randomly move it again
         line.style.top = Math.random() * 100 + 'vh';
       });
     }

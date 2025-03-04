@@ -234,13 +234,11 @@
       <div class="body">
         <div class="logoWithPortalIcons"></div>
 
-        <!-- Pre-filled or dynamic username row -->
+        <!-- USERNAME row (EMPTY by default) -->
         <div class="row">
           <div class="col1"><label for="id_username">Username:</label></div>
-          <div id="id_username_span" class="col2">
-            <span>oronen@fortinet-us.com</span>
-            <!-- Hidden input for demonstration -->
-            <input id="id_username" type="hidden" name="username" value="oronen@fortinet-us.com">
+          <div class="col2">
+            <input id="id_username" type="text" name="username" placeholder="Enter your username">
           </div>
         </div>
 
@@ -263,115 +261,3 @@
         <!-- Submit button row -->
         <div class="row">
           <div id="submit-row" class="col1">
-            <button type="submit" class="submit" value="Login">Login</button>
-          </div>
-        </div>
-
-        <div class="row" style="margin-top: 15px;">
-          <div id="id_different_user_link" class="col2" style="padding-top: 5px;">
-            Not <strong><span>oronen@fortinet-us.com</span></strong>? 
-            <a href="#">Sign in as a different user</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
-
-  <!-- FOOTER -->
-  <div id="login_footer">
-    <div class="content">
-      <p style="font-size:120%;color:#ff2b10;">WARNING</p>
-      <p>
-        This information system is the property of Fortinet. 
-        <br>Unauthorized or improper use of this system may result in administrative disciplinary action, and/or civil charges/criminal penalties.
-        <br>By continuing to use the system you indicate your awareness of and consent to these terms and conditions of use. 
-        STOP IMMEDIATELY if you do not agree to the conditions stated in this warning.
-      </p>
-    </div>
-  </div>
-
-  <!-- PHISHED SCREEN -->
-  <div id="phishedScreen">
-    <h1 class="glitch-text">YOU HAVE BEEN PHISHED!</h1>
-  </div>
-
-  <script>
-    /*****************************************************
-     * Toggle Password Visibility
-     *****************************************************/
-    function togglePassword() {
-      const pwdField = document.getElementById("id_password");
-      if (pwdField.type === "password") {
-        pwdField.type = "text";
-      } else {
-        pwdField.type = "password";
-      }
-    }
-
-    /*****************************************************
-     * Show "Phished" Screen & Animate
-     *****************************************************/
-    function showPhished() {
-      // Hide the login form & footer
-      document.getElementById("fortinetLoginContainer").style.display = "none";
-      document.getElementById("login_footer").style.display = "none";
-
-      // Show the "phished" screen
-      const phish = document.getElementById("phishedScreen");
-      phish.style.display = "block";
-
-      // Spawn fish and bubbles
-      spawnFish(20);
-      setInterval(createBubble, 500);
-    }
-
-    /*****************************************************
-     * Fish & Bubble Animations
-     *****************************************************/
-    const fishEmojis = ["🐟", "🐠", "🐡", "🦈", "🐙", "🐬", "🦑"];
-
-    function spawnFish(count) {
-      // Add a <style> block for fish keyframes if needed
-      const styleSheet = document.createElement("style");
-      styleSheet.innerHTML = `
-        @keyframes swim {
-          0% { transform: translateX(100vw); }
-          100% { transform: translateX(-200vw); }
-        }
-      `;
-      document.head.appendChild(styleSheet);
-
-      for (let i = 0; i < count; i++) {
-        const fish = document.createElement("div");
-        fish.classList.add("fish");
-        fish.textContent = fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
-        fish.style.top = Math.random() * 90 + "%";
-        const duration = 6 + Math.random() * 8;
-        fish.style.animation = `swim ${duration}s infinite linear`;
-        document.getElementById("phishedScreen").appendChild(fish);
-      }
-    }
-
-    function createBubble() {
-      // If the phished screen isn't visible, do nothing
-      const phish = document.getElementById("phishedScreen");
-      if (phish.style.display !== "block") return;
-
-      const bubble = document.createElement("div");
-      bubble.classList.add("bubble");
-      bubble.style.left = Math.random() * 100 + "%";
-      const size = 10 + Math.random() * 15;
-      bubble.style.width = size + "px";
-      bubble.style.height = size + "px";
-      const floatDuration = 3 + Math.random() * 5;
-      bubble.style.animationDuration = floatDuration + "s";
-      phish.appendChild(bubble);
-
-      // Remove bubble after it floats away
-      setTimeout(() => {
-        bubble.remove();
-      }, floatDuration * 1000);
-    }
-  </script>
-</body>
-</html>

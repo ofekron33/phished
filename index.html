@@ -1,62 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>You Have Been Phished!</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Fortinet SSO - Demo Phishing Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* Body: full-screen with animated gradient background */
-    html, body {
+    /***************************************************************
+     * BASE / FORTINET SSO STYLING
+     ***************************************************************/
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 13px;
+      color: #425152;
+      background-color: #eeeeee;
+    }
+
+    ::-moz-placeholder { color: #d9dad9; }
+    :-ms-input-placeholder { color: #d9dad9; }
+    ::-ms-input-placeholder { color: #d9dad9; }
+    ::placeholder { color: #d9dad9; }
+
+    a {
+      color: #425152;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    input, button {
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+    button.submit {
+      font-weight: bold;
+      text-align: center;
+      min-width: 90px;
+      color: #f0f0f0;
+      background: #444;
+      border-color: #444;
+      border-style: solid;
+      cursor: pointer;
+      padding: 7px 20px;
+      transition: background 0.3s ease;
+    }
+    button.submit:hover {
+      color: #ffffff;
+    }
+
+    .row { margin: 10px 0; }
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px;
+      box-shadow: 2px 2px 4px 2px #ccc;
+      width: 416px;
+      border-radius: 5px;
+      margin: 10% auto 30px auto;
+    }
+
+    .body {
+      padding: 20px 0;
+    }
+
+    /* Fortinet logo area */
+    .logoWithPortalIcons {
+      width: 150px;
+      height: 50px;
+      background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAARCAYAAAA/tFWCAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYNAictBVTA/AAAAj5JREFUaN7tWdFtgzAQfakyAPICyQffNCOQCdpMUDaoMkHIBFUnSDJB0gkgE5T62x9MgLJB+pGLRK2AMbYbiHgSPxjuznfPvjt7BOAMO0gBzAGgCHwPQAJgJn2zZlzEReBX6mRcjIrAD+n/MnIAC8ZFVnoXA1i1sPUEICOZO7LdVOYVIwC37J+X9LT1eUaPbDMqdOpiTfNPSF5rHzzBDfY3SGWKKYA9kdYUHjkuIidG6AdmfbHZOrGKwJ8Zsl1FrlcHcjcku0/YOPRz94jlKPBlvDiSG6J/eO+qYeOaPGtSa6nG1goZec03eZM6r8HO900psfzuWmOV5y/XG011tKltVOl7Iy1c1SIetbRHnp/sA6W9Y9tMZVykCnKBcRErxnNDcqMBcbOe7VInAJ//kBGc7VgTTYdfO6xrjRUBeKv4dse42Das0z6qOiPGxVJRlDfZsfqY+myn9z+xc02sSLPjkFNDXdCOml1bm64pMdgRHg2JZuw6Xbz3FYfBBQOxbGOraAoGWEiFqUbKQscCkuNyKq3CREr3EXU6j0au9T1jd5aeuEeOiyXbE4N5hzV1iq6OUCG/rc9vyW0yZqNW07LX+nED3fNVBSllXKRF4Md1RxFF4E9rGoi8SWc54C6YUROUjx0ID1F/iZsqxmPqLFc1/w/EstMVytgZ+HZPpPIAHF0QK3PsrK+BL1qLXAdHAz07XK6YPAC59a6QcXFwWBSehmOBzsKjuJ9cHjcs4ObAcUnXPQO6hRTAc2nx//wCPaq4/QlxCjAAAAAASUVORK5CYII=') no-repeat left top;
+      margin-bottom: 20px;
+    }
+
+    .col1, .col2 {
+      float: left;
+      line-height: 30px;
+      vertical-align: middle;
+      padding-top: 4px;
+    }
+
+    .col1 {
+      width: 124px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .col2 {
+      width: 286px;
+    }
+
+    .col2 input {
+      width: 96%;
+      line-height: 18px;
+      border: 1px solid #ccc;
+    }
+    .col2 input:focus {
+      border-color: grey;
+      outline: 0;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),
+                  0 0 8px rgba(145, 145, 145, .6);
+    }
+
+    .error {
+      color: #D52B1E;
+      font-weight: normal;
+    }
+
+    #submit-row { line-height: 40px; padding-top: 10px; }
+
+    /* Password icon (toggle visibility) */
+    .password-icon {
+      width: 20px;
+      position: absolute;
+      cursor: pointer;
+      margin-top: 9px;
+      margin-left: -28px;
+      background-color: white;
+    }
+
+    /* Footer text */
+    #login_footer {
+      line-height: 125%;
+      font-size: 12px;
+      text-align: justify;
+      width: 500px;
+      margin: 90px auto auto auto;
+      padding-left: 10px;
+    }
+    #login_footer .content {
+      padding: 10px;
+    }
+
+    /* Hide the "phished" screen initially */
+    #phishedScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       margin: 0;
       padding: 0;
-      height: 100%;
-      width: 100%;
+      background: #000;
       overflow: hidden;
-      font-family: 'Trebuchet MS', sans-serif;
-      user-select: none;
-      background: linear-gradient(45deg, #1e3c72, #2a5298, #000);
-      background-size: 400% 400%;
-      animation: gradientShift 20s ease infinite;
-    }
-
-    @keyframes gradientShift {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    /* Container for central text */
-    .container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      z-index: 9999; /* On top of everything */
       text-align: center;
     }
 
-    /* Main headline with a glitchy neon effect */
-    h1 {
+    /***************************************************************
+     * PHISHED SCREEN STYLES (fish, glitchy text, bubbles)
+     ***************************************************************/
+    .glitch-text {
       font-size: 4rem;
       text-transform: uppercase;
       color: #fff;
-      position: relative;
+      margin-top: 15%;
       animation: glitch 1s infinite;
       text-shadow:
         0 0 5px #ff005a,
         0 0 10px #ff005a,
         0 0 20px #ff005a,
         0 0 40px #ff005a;
-      margin: 0;
-      z-index: 2; /* Make sure it's above other elements */
     }
-
     @keyframes glitch {
       0% {
         text-shadow: 2px 2px 0 #ff005a, -2px -2px 0 #00f0ff;
@@ -78,7 +186,6 @@
       }
     }
 
-    /* Fish styling (still swimming) */
     .fish {
       position: absolute;
       font-size: 2rem;
@@ -88,7 +195,6 @@
       white-space: nowrap;
     }
 
-    /* Bubbles styling */
     .bubble {
       position: absolute;
       left: 50%;
@@ -101,7 +207,6 @@
       pointer-events: none;
     }
 
-    /* Keyframes for bubble floating */
     @keyframes floatUp {
       0% {
         transform: translateX(0) translateY(0) scale(0.5);
@@ -118,79 +223,151 @@
         opacity: 0;
       }
     }
+
   </style>
 </head>
-<body>
 
-  <div class="container">
-    <h1>YOU HAVE BEEN PHISHED!</h1>
+<body>
+  <!-- LOGIN FORM (Fortinet Style) -->
+  <form id="login_form" autocomplete="off" onsubmit="event.preventDefault(); showPhished();">
+    <div class="container" id="fortinetLoginContainer">
+      <div class="body">
+        <div class="logoWithPortalIcons"></div>
+
+        <!-- Pre-filled or dynamic username row -->
+        <div class="row">
+          <div class="col1"><label for="id_username">Username:</label></div>
+          <div id="id_username_span" class="col2">
+            <span>oronen@fortinet-us.com</span>
+            <!-- Hidden input for demonstration -->
+            <input id="id_username" type="hidden" name="username" value="oronen@fortinet-us.com">
+          </div>
+        </div>
+
+        <!-- Password row -->
+        <div class="row" style="position: relative;">
+          <div class="col1"><label for="id_password">Password:</label></div>
+          <div class="col2">
+            <input id="id_password" type="password" name="password" placeholder="Password">
+          </div>
+          <img id="id-password-reveal-icon" class="password-icon"
+               src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA="
+               onclick="togglePassword()" alt="Toggle Visibility">
+        </div>
+
+        <!-- Error row (if needed) -->
+        <div class="row">
+          <div><span class="error" id="error"></span></div>
+        </div>
+
+        <!-- Submit button row -->
+        <div class="row">
+          <div id="submit-row" class="col1">
+            <button type="submit" class="submit" value="Login">Login</button>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 15px;">
+          <div id="id_different_user_link" class="col2" style="padding-top: 5px;">
+            Not <strong><span>oronen@fortinet-us.com</span></strong>? 
+            <a href="#">Sign in as a different user</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- FOOTER -->
+  <div id="login_footer">
+    <div class="content">
+      <p style="font-size:120%;color:#ff2b10;">WARNING</p>
+      <p>
+        This information system is the property of Fortinet. 
+        <br>Unauthorized or improper use of this system may result in administrative disciplinary action, and/or civil charges/criminal penalties.
+        <br>By continuing to use the system you indicate your awareness of and consent to these terms and conditions of use. 
+        STOP IMMEDIATELY if you do not agree to the conditions stated in this warning.
+      </p>
+    </div>
+  </div>
+
+  <!-- PHISHED SCREEN -->
+  <div id="phishedScreen">
+    <h1 class="glitch-text">YOU HAVE BEEN PHISHED!</h1>
   </div>
 
   <script>
-    // Array of fish/sea creature emojis
+    /*****************************************************
+     * Toggle Password Visibility
+     *****************************************************/
+    function togglePassword() {
+      const pwdField = document.getElementById("id_password");
+      if (pwdField.type === "password") {
+        pwdField.type = "text";
+      } else {
+        pwdField.type = "password";
+      }
+    }
+
+    /*****************************************************
+     * Show "Phished" Screen & Animate
+     *****************************************************/
+    function showPhished() {
+      // Hide the login form & footer
+      document.getElementById("fortinetLoginContainer").style.display = "none";
+      document.getElementById("login_footer").style.display = "none";
+
+      // Show the "phished" screen
+      const phish = document.getElementById("phishedScreen");
+      phish.style.display = "block";
+
+      // Spawn fish and bubbles
+      spawnFish(20);
+      setInterval(createBubble, 500);
+    }
+
+    /*****************************************************
+     * Fish & Bubble Animations
+     *****************************************************/
     const fishEmojis = ["🐟", "🐠", "🐡", "🦈", "🐙", "🐬", "🦑"];
 
-    // Number of fish to add
-    const FISH_COUNT = 20;
-
-    // Create fish elements
-    for (let i = 0; i < FISH_COUNT; i++) {
-      createFish();
-    }
-
-    function createFish() {
-      const fish = document.createElement("div");
-      fish.classList.add("fish");
-      fish.textContent = fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
-      
-      // Random vertical positioning (within the window)
-      fish.style.top = Math.random() * 90 + "%";
-      
-      // Random animation duration (from 6s to 14s)
-      const duration = 6 + Math.random() * 8;
-      fish.style.animation = `swim ${duration}s infinite`;
-      
-      document.body.appendChild(fish);
-    }
-
-    // Define keyframes via JS so each fish has the same movement pattern
-    const styleSheet = document.createElement("style");
-    styleSheet.innerHTML = `
-      @keyframes swim {
-        0% {
-          transform: translateX(100vw);
+    function spawnFish(count) {
+      // Add a <style> block for fish keyframes if needed
+      const styleSheet = document.createElement("style");
+      styleSheet.innerHTML = `
+        @keyframes swim {
+          0% { transform: translateX(100vw); }
+          100% { transform: translateX(-200vw); }
         }
-        100% {
-          transform: translateX(-200vw);
-        }
+      `;
+      document.head.appendChild(styleSheet);
+
+      for (let i = 0; i < count; i++) {
+        const fish = document.createElement("div");
+        fish.classList.add("fish");
+        fish.textContent = fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
+        fish.style.top = Math.random() * 90 + "%";
+        const duration = 6 + Math.random() * 8;
+        fish.style.animation = `swim ${duration}s infinite linear`;
+        document.getElementById("phishedScreen").appendChild(fish);
       }
-    `;
-    document.head.appendChild(styleSheet);
-
-    // Create bubbles at intervals
-    setInterval(() => {
-      createBubble();
-    }, 500);
+    }
 
     function createBubble() {
+      // If the phished screen isn't visible, do nothing
+      const phish = document.getElementById("phishedScreen");
+      if (phish.style.display !== "block") return;
+
       const bubble = document.createElement("div");
       bubble.classList.add("bubble");
-      
-      // Random horizontal start (0% - 100%)
       bubble.style.left = Math.random() * 100 + "%";
-      
-      // Random size for each bubble (10px to 25px)
       const size = 10 + Math.random() * 15;
       bubble.style.width = size + "px";
       bubble.style.height = size + "px";
-
-      // Random floatUp duration (3s - 8s)
       const floatDuration = 3 + Math.random() * 5;
       bubble.style.animationDuration = floatDuration + "s";
+      phish.appendChild(bubble);
 
-      document.body.appendChild(bubble);
-
-      // Remove bubble after animation completes
+      // Remove bubble after it floats away
       setTimeout(() => {
         bubble.remove();
       }, floatDuration * 1000);

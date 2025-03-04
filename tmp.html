@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>You Have Been Phished!</title>
+  <style>
+    /* Basic page styling */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #222;
+      color: #fff;
+      font-family: 'Trebuchet MS', sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 4rem;
+      text-transform: uppercase;
+      animation: glitch 1s infinite;
+      margin: 0;
+    }
+
+    /* Glitch animation on text */
+    @keyframes glitch {
+      0% {
+        text-shadow: 2px 2px 0 red, -2px -2px 0 blue;
+      }
+      20% {
+        text-shadow: -2px -2px 0 red, 2px 2px 0 blue;
+      }
+      40% {
+        text-shadow: 2px -2px 0 red, -2px 2px 0 blue;
+      }
+      60% {
+        text-shadow: -2px 2px 0 red, 2px -2px 0 blue;
+      }
+      80% {
+        text-shadow: 2px 2px 0 red, -2px -2px 0 blue;
+      }
+      100% {
+        text-shadow: -2px -2px 0 red, 2px 2px 0 blue;
+      }
+    }
+
+    /* Fish (or sea creatures) styling */
+    .fish {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.8;
+      transform: translateX(100vw);
+      animation-timing-function: linear;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>YOU HAVE BEEN PHISHED!</h1>
+  </div>
+
+  <script>
+    // Array of fish/sea creature emojis
+    const fishEmojis = ["🐟", "🐠", "🐡", "🦈", "🐙", "🐬", "🦑"];
+
+    // Number of fish to add
+    const FISH_COUNT = 15;
+
+    for (let i = 0; i < FISH_COUNT; i++) {
+      createFish();
+    }
+
+    function createFish() {
+      const fish = document.createElement("div");
+      fish.classList.add("fish");
+      fish.textContent = fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
+
+      // Random vertical positioning
+      fish.style.top = Math.random() * 100 + "%";
+
+      // Random animation duration (from 4s to 10s)
+      const duration = 4 + Math.random() * 6;
+      fish.style.animation = `swim ${duration}s infinite`;
+
+      document.body.appendChild(fish);
+    }
+
+    // Define keyframes via JS so each fish has the same movement pattern
+    const styleSheet = document.createElement("style");
+    styleSheet.innerHTML = `
+      @keyframes swim {
+        0% {
+          transform: translateX(100vw);
+        }
+        100% {
+          transform: translateX(-200vw);
+        }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+  </script>
+</body>
+</html>

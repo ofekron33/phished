@@ -1,263 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Fortinet SSO - Demo Phishing Page</title>
+  <meta charset="UTF-8">
+  <title>You Have Been Phished!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /***************************************************************
-     * BASE / FORTINET SSO STYLING
-     ***************************************************************/
-    body {
-      margin: 0;
-      font-family: "Helvetica Neue", Helvetica, sans-serif;
-      font-size: 13px;
-      color: #425152;
-      background-color: #eeeeee;
+    /* 
+      ============================
+      GLOBAL STYLES & VARIABLES
+      ============================
+    */
+    :root {
+      --fortinet-red: #EE3031;
+      --fortinet-gray: #425152;
+      --dark-bg: #1a1a1a;
+      --light-bg: #f8f8f8;
+      --font-main: "Helvetica Neue", Helvetica, sans-serif;
     }
 
-    ::-moz-placeholder { color: #d9dad9; }
-    :-ms-input-placeholder { color: #d9dad9; }
-    ::-ms-input-placeholder { color: #d9dad9; }
-    ::placeholder { color: #d9dad9; }
-
-    a {
-      color: #425152;
-      text-decoration: none;
-    }
-    a:hover { text-decoration: underline; }
-
-    input, button {
-      border-radius: 5px;
-      padding: 5px;
-    }
-
-    button.submit {
-      font-weight: bold;
-      text-align: center;
-      min-width: 90px;
-      color: #f0f0f0;
-      background: #444;
-      border-color: #444;
-      border-style: solid;
-      cursor: pointer;
-      padding: 7px 20px;
-      transition: background 0.3s ease;
-    }
-    button.submit:hover {
-      color: #ffffff;
-    }
-
-    .row { margin: 10px 0; }
-    .row:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-
-    .container {
-      background: #fff;
-      padding: 40px;
-      box-shadow: 2px 2px 4px 2px #ccc;
-      width: 416px;
-      border-radius: 5px;
-      margin: 10% auto 30px auto;
-    }
-
-    .body {
-      padding: 20px 0;
-    }
-
-    /* Fortinet logo area */
-    .logoWithPortalIcons {
-      width: 150px;
-      height: 50px;
-      background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAARCAYAAAA/tFWCAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYNAictBVTA/AAAAj5JREFUaN7tWdFtgzAQfakyAPICyQffNCOQCdpMUDaoMkHIBFUnSDJB0gkgE5T62x9MgLJB+pGLRK2AMbYbiHgSPxjuznfPvjt7BOAMO0gBzAGgCHwPQAJgJn2zZlzEReBX6mRcjIrAD+n/MnIAC8ZFVnoXA1i1sPUEICOZO7LdVOYVIwC37J+X9LT1eUaPbDMqdOpiTfNPSF5rHzzBDfY3SGWKKYA9kdYUHjkuIidG6AdmfbHZOrGKwJ8Zsl1FrlcHcjcku0/YOPRz94jlKPBlvDiSG6J/eO+qYeOaPGtSa6nG1goZec03eZM6r8HO900psfzuWmOV5y/XG011tKltVOl7Iy1c1SIetbRHnp/sA6W9Y9tMZVykCnKBcRErxnNDcqMBcbOe7VInAJ//kBGc7VgTTYdfO6xrjRUBeKv4dse42Das0z6qOiPGxVJRlDfZsfqY+myn9z+xc02sSLPjkFNDXdCOml1bm64pMdgRHg2JZuw6Xbz3FYfBBQOxbGOraAoGWEiFqUbKQscCkuNyKq3CREr3EXU6j0au9T1jd5aeuEeOiyXbE4N5hzV1iq6OUCG/rc9vyW0yZqNW07LX+nED3fNVBSllXKRF4Md1RxFF4E9rGoi8SWc54C6YUROUjx0ID1F/iZsqxmPqLFc1/w/EstMVytgZ+HZPpPIAHF0QK3PsrK+BL1qLXAdHAz07XK6YPAC59a6QcXFwWBSehmOBzsKjuJ9cHjcs4ObAcUnXPQO6hRTAc2nx//wCPaq4/QlxCjAAAAAASUVORK5CYII=') no-repeat left top;
-      margin-bottom: 20px;
-    }
-
-    .col1, .col2 {
-      float: left;
-      line-height: 30px;
-      vertical-align: middle;
-      padding-top: 4px;
-    }
-
-    .col1 {
-      width: 124px;
-      font-size: 13px;
-      font-weight: 600;
-    }
-    .col2 {
-      width: 286px;
-    }
-
-    .col2 input {
-      width: 96%;
-      line-height: 18px;
-      border: 1px solid #ccc;
-    }
-    .col2 input:focus {
-      border-color: grey;
-      outline: 0;
-      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),
-                  0 0 8px rgba(145, 145, 145, .6);
-    }
-
-    .error {
-      color: #D52B1E;
-      font-weight: normal;
-    }
-
-    #submit-row { line-height: 40px; padding-top: 10px; }
-
-    /* Password icon (toggle visibility) */
-    .password-icon {
-      width: 20px;
-      position: absolute;
-      cursor: pointer;
-      margin-top: 9px;
-      margin-left: -28px;
-      background-color: white;
-    }
-
-    /* Footer text */
-    #login_footer {
-      line-height: 125%;
-      font-size: 12px;
-      text-align: justify;
-      width: 500px;
-      margin: 90px auto auto auto;
-      padding-left: 10px;
-    }
-    #login_footer .content {
-      padding: 10px;
-    }
-
-    /* Hide the "phished" screen initially */
-    #phishedScreen {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: #000;
-      overflow: hidden;
-      z-index: 9999; /* On top of everything */
-      text-align: center;
     }
 
-    /***************************************************************
-     * PHISHED SCREEN STYLES (fish, glitchy text, bubbles)
-     ***************************************************************/
-    .glitch-text {
-      font-size: 4rem;
-      text-transform: uppercase;
-      color: #fff;
-      margin-top: 15%;
-      animation: glitch 1s infinite;
-      text-shadow:
-        0 0 5px #ff005a,
-        0 0 10px #ff005a,
-        0 0 20px #ff005a,
-        0 0 40px #ff005a;
+    body {
+      font-family: var(--font-main);
+      overflow: hidden;  /* Hide scrollbars to maintain the immersive effect */
+      background: #000;
     }
+
+    /*
+      ============================================
+      ANIMATED BACKGROUND (Swirling Gradient)
+      ============================================
+    */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: linear-gradient(
+        135deg,
+        var(--fortinet-red),
+        #2a2e3a,
+        var(--fortinet-gray),
+        #000
+      );
+      background-size: 400% 400%;
+      animation: swirl 20s ease-in-out infinite;
+      z-index: -2;
+    }
+    @keyframes swirl {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /*
+      =================================
+      HORIZONTAL SCAN LINES (subtle)
+      =================================
+    */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      animation: flicker 3s infinite;
+      z-index: -1;
+    }
+    @keyframes flicker {
+      0%, 5%, 12%, 15%, 25%, 36%, 45%, 55%, 65%, 75%, 85%, 95% {
+        opacity: 1;
+      }
+      1%, 6%, 14%, 16%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% {
+        opacity: 0.8;
+      }
+    }
+
+    /*
+      =================================================
+      MAIN CONTAINER: Centered text & Fortinet logo
+      =================================================
+    */
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    /* Fortinet logo in the corner (optional) */
+    .fortinet-logo {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 180px;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+    }
+    .fortinet-logo:hover {
+      opacity: 1;
+    }
+
+    /*
+      ====================================
+      GLITCH TITLE
+      ====================================
+    */
+    h1.glitch-text {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      position: relative;
+      animation: glitch 1s infinite;
+    }
+
     @keyframes glitch {
       0% {
-        text-shadow: 2px 2px 0 #ff005a, -2px -2px 0 #00f0ff;
+        text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff;
       }
       20% {
-        text-shadow: -2px -2px 0 #ff005a, 2px 2px 0 #00f0ff;
+        text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff;
       }
       40% {
-        text-shadow: 2px -2px 0 #ff005a, -2px 2px 0 #00f0ff;
+        text-shadow: 2px -2px 0 var(--fortinet-red), -2px 2px 0 #00f0ff;
       }
       60% {
-        text-shadow: -2px 2px 0 #ff005a, 2px -2px 0 #00f0ff;
+        text-shadow: -2px 2px 0 var(--fortinet-red), 2px -2px 0 #00f0ff;
       }
       80% {
-        text-shadow: 2px 2px 0 #ff005a, -2px -2px 0 #00f0ff;
+        text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff;
       }
       100% {
-        text-shadow: -2px -2px 0 #ff005a, 2px 2px 0 #00f0ff;
+        text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff;
       }
     }
 
-    .fish {
-      position: absolute;
-      font-size: 2rem;
-      opacity: 0.9;
-      transform: translateX(100vw);
-      animation-timing-function: linear;
-      white-space: nowrap;
+    /*
+      ====================================
+      SUBTITLE with Flicker + Slide-In
+      ====================================
+    */
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: subtitleAppear 2s forwards 0.5s;
     }
-
-    .bubble {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.7);
-      animation: floatUp 4s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes floatUp {
+    @keyframes subtitleAppear {
       0% {
-        transform: translateX(0) translateY(0) scale(0.5);
+        transform: translateY(20px);
         opacity: 0;
       }
-      10% {
-        opacity: 1;
-      }
-      80% {
+      60% {
+        transform: translateY(-5px);
         opacity: 1;
       }
       100% {
-        transform: translateX(-50px) translateY(-80vh) scale(1.5);
-        opacity: 0;
+        transform: translateY(0);
+        opacity: 1;
       }
     }
 
+    /*
+      ==========================================
+      CTA (Call-To-Action) - "Get FortiPoint..."
+      ==========================================
+    */
+    .cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--fortinet-red);
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(238,48,49,0.5);
+      position: relative;
+      overflow: hidden;
+      animation: ctaPulse 2.5s infinite alternate;
+    }
+    @keyframes ctaPulse {
+      0% {
+        box-shadow: 0 0 8px rgba(238,48,49,0.5);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(238,48,49,0.9);
+      }
+    }
+    .cta:hover {
+      background: #f53536;
+      box-shadow: 0 0 20px rgba(238,48,49,1);
+    }
+
+    /*
+      ===================================================
+      FLOATING CYBER-LINES (Animated with JavaScript)
+      ===================================================
+    */
+    .cyber-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background-color: #fff;
+      opacity: 0.3;
+      animation-timing-function: linear;
+      z-index: 1;
+    }
+
+    /* Keyframes for lines to move from left -> right or right -> left */
+    @keyframes lineSlideLtoR {
+      0% { transform: translateX(-100vw); }
+      100% { transform: translateX(100vw); }
+    }
+    @keyframes lineSlideRtoL {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100vw); }
+    }
+
+    /* Responsive adjustments */
+    @media(max-width: 600px){
+      h1.glitch-text {
+        font-size: 2rem;
+      }
+      .subtitle {
+        font-size: 1rem;
+      }
+      .cta {
+        font-size: 0.9rem;
+      }
+      .fortinet-logo {
+        width: 120px;
+      }
+    }
   </style>
 </head>
-
 <body>
-  <!-- LOGIN FORM (Fortinet Style) -->
-  <form id="login_form" autocomplete="off" onsubmit="event.preventDefault(); showPhished();">
-    <div class="container" id="fortinetLoginContainer">
-      <div class="body">
-        <div class="logoWithPortalIcons"></div>
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+    <!-- (Optional) Fortinet Logo in corner -->
+    <img 
+      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjcwIiB2aWV3Qm94PSIwIDAgMjUwIDcwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcwLjYxMyAwSDBWNzBIMTAuMlYyMy45NzJIMzAuMzMwNFY0Ni4yMjNIMzkuOTY4NVYyMy45NzJINzAuNjEzVjBIMzAuMzMxNEgxMC4yMDlWMjMuOTcySDBWMzAuNzExNUgzMC4zMzE0VjcwSDcwLjYxM1YwWiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTc5LjM4NyAwSDExOS42OTVWMjMuOTcySDg5LjA3ODRWNDYuMjIzSDc5LjM4N1YyMy45NzJINzkuMzg2OTNINzkuMzg3VjBINTkuNzQ1OVg3OS4zODdIMTE5LjY5NVY3MEg3OS4zODdWMzAuNzExNUg1OS43NDU5TDc5LjM4NyAzMC43MTE1VjBIMzAuMzMxNFYyMy45NzJBMTAuMjA5LDIzLjk3MiAwIDAsMCAzMC4zMzE0LDIzLjk3MkgxMC4yMDlWMzAuNzExNVpNMTI5LjUzOCAwaDUwLjEwM3YyMy45NzJoMjkuNjYxNnYyMi4yNTFoOS43NjI2VjIzLjk3MkgxNzkuNjQxVjBoLTMwLjA4MzRIMTI5LjUzOFYwWk0xMjkuNTM4IDMwLjcxMTVIMTQ5LjUgMzAuNzExNXY1LjUwMDNIMTI5LjUzOFYzMC43MTE1WiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEyOS41MzggMzAuNzExNVY0Ni4yMjNIMTI5LjUzOFY2OUgxNDUuMDM3VjQ2LjIyM0gxNzkuNjQxVjMwLjcxMTVIMTU5LjY1N3Y1LjUwMDNIMTQ5LjUsMzAuNzExNVoiPjwvcGF0aD4KPC9zdmc+" 
+      alt="Fortinet Logo" 
+      class="fortinet-logo"
+    />
 
-        <!-- USERNAME row (EMPTY by default) -->
-        <div class="row">
-          <div class="col1"><label for="id_username">Username:</label></div>
-          <div class="col2">
-            <input id="id_username" type="text" name="username" placeholder="Enter your username">
-          </div>
-        </div>
+    <!-- GLITCHY HEADING -->
+    <h1 class="glitch-text">You Have Been Phished!</h1>
 
-        <!-- Password row -->
-        <div class="row" style="position: relative;">
-          <div class="col1"><label for="id_password">Password:</label></div>
-          <div class="col2">
-            <input id="id_password" type="password" name="password" placeholder="Password">
-          </div>
-          <img id="id-password-reveal-icon" class="password-icon"
-               src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA="
-               onclick="togglePassword()" alt="Toggle Visibility">
-        </div>
+    <!-- SUBTITLE -->
+    <div class="subtitle">Don’t be a victim of cyber threats.</div>
 
-        <!-- Error row (if needed) -->
-        <div class="row">
-          <div><span class="error" id="error"></span></div>
-        </div>
+    <!-- CTA -->
+    <a href="#" class="cta">Get FortiPoint Advanced Email Security</a>
+  </div>
 
-        <!-- Submit button row -->
-        <div class="row">
-          <div id="submit-row" class="col1">
+  <script>
+    /*
+      ============================
+      FLOATING “CYBER LINES”
+      ============================
+      This script randomly creates horizontal lines that
+      zoom across the screen, giving a dynamic, cyber feel.
+    */
+    const lineCount = 8; // How many lines to animate
+    for(let i=0; i < lineCount; i++){
+      createCyberLine();
+    }
+
+    function createCyberLine(){
+      const line = document.createElement('div');
+      line.className = 'cyber-line';
+      // Random vertical position
+      line.style.top = Math.random() * 100 + 'vh';
+      // Random width (some lines short, some full)
+      line.style.width = (50 + Math.random()*50) + 'vw';
+
+      // Decide direction: 0 => L->R, 1 => R->L
+      const direction = Math.round(Math.random());
+      const duration = 3 + Math.random()*4; // 3s to 7s
+
+      if(direction === 0){
+        line.style.animation = `lineSlideLtoR ${duration}s infinite`;
+      } else {
+        line.style.animation = `lineSlideRtoL ${duration}s infinite`;
+      }
+
+      document.body.appendChild(line);
+
+      // Respawn or reposition line after it finishes
+      line.addEventListener('animationiteration', () => {
+        // Randomly move it again
+        line.style.top = Math.random() * 100 + 'vh';
+      });
+    }
+  </script>
+</body>
+</html>

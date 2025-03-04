@@ -4,69 +4,124 @@
   <meta charset="UTF-8">
   <title>You Have Been Phished!</title>
   <style>
-    /* Basic page styling */
-    body {
+    /* Body: full-screen with animated gradient background */
+    html, body {
       margin: 0;
       padding: 0;
-      background: #222;
-      color: #fff;
-      font-family: 'Trebuchet MS', sans-serif;
+      height: 100%;
+      width: 100%;
       overflow: hidden;
+      font-family: 'Trebuchet MS', sans-serif;
       user-select: none;
+      background: linear-gradient(45deg, #1e3c72, #2a5298, #000);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
     }
 
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Container for central text */
     .container {
       position: relative;
       width: 100%;
-      height: 100vh;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
     }
 
+    /* Main headline with a glitchy neon effect */
     h1 {
       font-size: 4rem;
       text-transform: uppercase;
+      color: #fff;
+      position: relative;
       animation: glitch 1s infinite;
+      text-shadow:
+        0 0 5px #ff005a,
+        0 0 10px #ff005a,
+        0 0 20px #ff005a,
+        0 0 40px #ff005a;
       margin: 0;
+      z-index: 2; /* Make sure it's above other elements */
     }
 
-    /* Glitch animation on text */
     @keyframes glitch {
       0% {
-        text-shadow: 2px 2px 0 red, -2px -2px 0 blue;
+        text-shadow: 2px 2px 0 #ff005a, -2px -2px 0 #00f0ff;
       }
       20% {
-        text-shadow: -2px -2px 0 red, 2px 2px 0 blue;
+        text-shadow: -2px -2px 0 #ff005a, 2px 2px 0 #00f0ff;
       }
       40% {
-        text-shadow: 2px -2px 0 red, -2px 2px 0 blue;
+        text-shadow: 2px -2px 0 #ff005a, -2px 2px 0 #00f0ff;
       }
       60% {
-        text-shadow: -2px 2px 0 red, 2px -2px 0 blue;
+        text-shadow: -2px 2px 0 #ff005a, 2px -2px 0 #00f0ff;
       }
       80% {
-        text-shadow: 2px 2px 0 red, -2px -2px 0 blue;
+        text-shadow: 2px 2px 0 #ff005a, -2px -2px 0 #00f0ff;
       }
       100% {
-        text-shadow: -2px -2px 0 red, 2px 2px 0 blue;
+        text-shadow: -2px -2px 0 #ff005a, 2px 2px 0 #00f0ff;
       }
     }
 
-    /* Fish (or sea creatures) styling */
+    /* Fish styling (still swimming) */
     .fish {
       position: absolute;
       font-size: 2rem;
-      opacity: 0.8;
+      opacity: 0.9;
       transform: translateX(100vw);
       animation-timing-function: linear;
       white-space: nowrap;
     }
+
+    /* Bubbles styling */
+    .bubble {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.7);
+      animation: floatUp 4s linear infinite;
+      pointer-events: none;
+    }
+
+    /* Keyframes for bubble floating */
+    @keyframes floatUp {
+      0% {
+        transform: translateX(0) translateY(0) scale(0.5);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-50px) translateY(-80vh) scale(1.5);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
-
 <body>
+
   <div class="container">
     <h1>YOU HAVE BEEN PHISHED!</h1>
   </div>
@@ -76,8 +131,9 @@
     const fishEmojis = ["🐟", "🐠", "🐡", "🦈", "🐙", "🐬", "🦑"];
 
     // Number of fish to add
-    const FISH_COUNT = 15;
+    const FISH_COUNT = 20;
 
+    // Create fish elements
     for (let i = 0; i < FISH_COUNT; i++) {
       createFish();
     }
@@ -86,14 +142,14 @@
       const fish = document.createElement("div");
       fish.classList.add("fish");
       fish.textContent = fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
-
-      // Random vertical positioning
-      fish.style.top = Math.random() * 100 + "%";
-
-      // Random animation duration (from 4s to 10s)
-      const duration = 4 + Math.random() * 6;
+      
+      // Random vertical positioning (within the window)
+      fish.style.top = Math.random() * 90 + "%";
+      
+      // Random animation duration (from 6s to 14s)
+      const duration = 6 + Math.random() * 8;
       fish.style.animation = `swim ${duration}s infinite`;
-
+      
       document.body.appendChild(fish);
     }
 
@@ -110,6 +166,35 @@
       }
     `;
     document.head.appendChild(styleSheet);
+
+    // Create bubbles at intervals
+    setInterval(() => {
+      createBubble();
+    }, 500);
+
+    function createBubble() {
+      const bubble = document.createElement("div");
+      bubble.classList.add("bubble");
+      
+      // Random horizontal start (0% - 100%)
+      bubble.style.left = Math.random() * 100 + "%";
+      
+      // Random size for each bubble (10px to 25px)
+      const size = 10 + Math.random() * 15;
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+
+      // Random floatUp duration (3s - 8s)
+      const floatDuration = 3 + Math.random() * 5;
+      bubble.style.animationDuration = floatDuration + "s";
+
+      document.body.appendChild(bubble);
+
+      // Remove bubble after animation completes
+      setTimeout(() => {
+        bubble.remove();
+      }, floatDuration * 1000);
+    }
   </script>
 </body>
 </html>

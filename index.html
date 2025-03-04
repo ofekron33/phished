@@ -159,7 +159,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      display: none; /* shown after "Login" */
+      display: none; /* shown after "submit" */
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -275,7 +275,8 @@
 <body>
   <!-- LOGIN CONTAINER -->
   <div id="loginContainer">
-    <div class="login-box">
+    <!-- We wrap the login fields in a form so we can have a "submit" button -->
+    <form class="login-box" onsubmit="handleLogin(event)">
       <div class="logoWithPortalIcons"></div>
       <h2>Fortinet SSO</h2>
 
@@ -291,11 +292,11 @@
         <input type="password" id="password" placeholder="Enter your password">
       </div>
 
-      <!-- SUBMIT BUTTON -->
+      <!-- SUBMIT BUTTON (type="submit") -->
       <div class="row" style="text-align: right; margin-top: 1.5rem;">
-        <button class="submit-btn" onclick="showPhished()">Login</button>
+        <button type="submit" class="submit-btn">Login</button>
       </div>
-    </div>
+    </form>
   </div>
 
   <!-- PHISHED CONTAINER -->
@@ -307,11 +308,15 @@
 
   <script>
     /**************************************************
-     * On "Login" click, hide login & show phished
+     * Handle Form Submit
      **************************************************/
-    function showPhished() {
+    function handleLogin(event) {
+      // Prevent actual form submission
+      event.preventDefault();
+
       // Hide login
       document.getElementById('loginContainer').style.display = 'none';
+
       // Show phished
       const phish = document.getElementById('phishedContainer');
       phish.style.display = 'flex';
@@ -336,7 +341,7 @@
       // Random vertical position
       line.style.top = Math.random() * 100 + 'vh';
       // Random width
-      line.style.width = (40 + Math.random()*60) + 'vw';
+      line.style.width = (40 + Math.random() * 60) + 'vw';
 
       // Random direction
       const direction = Math.round(Math.random());

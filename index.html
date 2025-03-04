@@ -109,4 +109,252 @@
       width: 150px;
       height: 50px;
       margin-bottom: 20px;
-      background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAARCAYAAAA/tFWCAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYNAictBVTA/AAAAj5JREFUaN7tWdFtgzAQfakyAPICyQffNCOQCdpMUDaoMkHIBFUnSDJB0gkgE5T62x9MgLJB
+      background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAARCAYAAAA/tFWCAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYNAictBVTA/AAAAj5JREFUaN7tWdFtgzAQfakyAPICyQffNCOQCdpMUDaoMkHIBFUnSDJB0gkgE5T62x9MgLJB+pGLRK2AMbYbiHgSPxjuznfPvjt7BOAMO0gBzAGgCHwPQAJgJn2zZlzEReBX6mRcjIrAD+n/MnIAC8ZFVnoXA1i1sPUEICOZO7LdVOYVIwC37J+X9LT1eUaPbDMqdOpiTfNPSF5rHzzBDfY3SGWKKYA9kdYUHjkuIidG6AdmfbHZOrGKwJ8Zsl1FrlcHcjcku0/YOPRz94jlKPBlvDiSG6J/eO+qYeOaPGtSa6nG1goZec03eZM6r8HO900psfzuWmOV5y/XG011tKltVOl7Iy1c1SIetbRHnp/sA6W9Y9tMZVykCnKBcRErxnNDcqMBcbOe7VInAJ//kBGc7VgTTYdfO6xrjRUBeKv4dse42Das0z6qOiPGxVJRlDfZsfqY+myn9z+xc02sSLPjkFNDXdCOml1bm64pMdgRHg2JZuw6Xbz3FYfBBQOxbGOraAoGWEiFqUbKQscCkuNyKq3CREr3EXU6j0au9T1jd5aeuEeOiyXbE4N5hzV1iq6OUCG/rc9vyW0yZqNW07LX+nED3fNVBSllXKRF4Md1RxFF4E9rGoi8SWc54C6YUROUjx0ID1F/iZsqxmPqLFc1/w/EstMVytgZ+HZPpPIAHF0QK3PsrK+BL1qLXAdHAz07XK6YPAC59a6QcXFwWBSehmOBzsKjuJ9cHjcs4ObAcUnXPQO6hRTAc2nx//wCPaq4/QlxCjAAAAAASUVORK5CYII=') no-repeat left top;
+    }
+
+    .login-box h2 {
+      margin-bottom: 1.5rem;
+      color: var(--fortinet-gray);
+    }
+
+    .row { margin-bottom: 1rem; }
+    .row label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    .row input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .row input:focus {
+      outline: none;
+      border-color: var(--fortinet-gray);
+      box-shadow: 0 0 5px rgba(66,81,82,0.4);
+    }
+
+    .submit-btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 1rem;
+      background: #444;
+      color: #f0f0f0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .submit-btn:hover {
+      background: #333;
+    }
+
+    /* 
+      ======================================
+      PHISHED CONTAINER (hidden by default)
+      ======================================
+    */
+    #phishedContainer {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      display: none; /* shown after "Login" */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding: 1rem;
+    }
+
+    /* 
+      GLITCH TEXT
+    */
+    h1.glitch-text {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      animation: glitch 1s infinite;
+    }
+    @keyframes glitch {
+      0%   { text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff; }
+      20%  { text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff; }
+      40%  { text-shadow: 2px -2px 0 var(--fortinet-red), -2px 2px 0 #00f0ff; }
+      60%  { text-shadow: -2px 2px 0 var(--fortinet-red), 2px -2px 0 #00f0ff; }
+      80%  { text-shadow: 2px 2px 0 var(--fortinet-red), -2px -2px 0 #00f0ff; }
+      100% { text-shadow: -2px -2px 0 var(--fortinet-red), 2px 2px 0 #00f0ff; }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: subtitleAppear 2s forwards 0.5s;
+    }
+    @keyframes subtitleAppear {
+      0%   { transform: translateY(20px); opacity: 0; }
+      60%  { transform: translateY(-5px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* CTA button with pulse effect */
+    .cta {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--fortinet-red);
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      box-shadow: 0 0 8px rgba(238,48,49,0.5);
+      animation: ctaPulse 2.5s infinite alternate;
+      margin-top: 1rem;
+    }
+    .cta:hover {
+      background: #f53536;
+      box-shadow: 0 0 20px rgba(238,48,49,1);
+    }
+    @keyframes ctaPulse {
+      0%   { box-shadow: 0 0 8px rgba(238,48,49,0.5); }
+      100% { box-shadow: 0 0 20px rgba(238,48,49,0.9); }
+    }
+
+    /* 
+      =========================================
+      CYBER LINES (spawned via JavaScript)
+      =========================================
+    */
+    .cyber-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background-color: #fff;
+      opacity: 0.3;
+      animation-timing-function: linear;
+      z-index: 1;
+    }
+    @keyframes lineSlideLtoR {
+      0%   { transform: translateX(-100vw); }
+      100% { transform: translateX(100vw); }
+    }
+    @keyframes lineSlideRtoL {
+      0%   { transform: translateX(100vw); }
+      100% { transform: translateX(-100vw); }
+    }
+
+    /*
+      ======================================
+      RESPONSIVE TWEAKS FOR SMALL SCREENS
+      ======================================
+    */
+    @media(max-width: 600px){
+      .login-box {
+        width: 95%;
+      }
+      .login-box h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+      h1.glitch-text {
+        font-size: 2rem;
+      }
+      .subtitle {
+        font-size: 1rem;
+      }
+      .cta {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOGIN CONTAINER -->
+  <div id="loginContainer">
+    <div class="login-box">
+      <div class="logoWithPortalIcons"></div>
+      <h2>Fortinet SSO</h2>
+
+      <!-- USERNAME -->
+      <div class="row">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username">
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="row">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <div class="row" style="text-align: right; margin-top: 1.5rem;">
+        <button class="submit-btn" onclick="showPhished()">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHISHED CONTAINER -->
+  <div id="phishedContainer">
+    <h1 class="glitch-text">You Have Been Phished!</h1>
+    <div class="subtitle">Don’t be the next cyber statistic.</div>
+    <a href="#" class="cta">Get FortiPoint Advanced Email Security</a>
+  </div>
+
+  <script>
+    /**************************************************
+     * On "Login" click, hide login & show phished
+     **************************************************/
+    function showPhished() {
+      // Hide login
+      document.getElementById('loginContainer').style.display = 'none';
+      // Show phished
+      const phish = document.getElementById('phishedContainer');
+      phish.style.display = 'flex';
+
+      // Spawn floating "cyber lines"
+      spawnCyberLines(10);
+    }
+
+    /**************************************************
+     * Floating "CYBER LINES"
+     **************************************************/
+    function spawnCyberLines(count) {
+      for (let i = 0; i < count; i++) {
+        createLine();
+      }
+    }
+
+    function createLine() {
+      const line = document.createElement('div');
+      line.className = 'cyber-line';
+
+      // Random vertical position
+      line.style.top = Math.random() * 100 + 'vh';
+      // Random width
+      line.style.width = (40 + Math.random()*60) + 'vw';
+
+      // Random direction
+      const direction = Math.round(Math.random());
+      const duration = 3 + Math.random() * 4; // 3s to 7s
+
+      if (direction === 0) {
+        line.style.animation = `lineSlideLtoR ${duration}s infinite`;
+      } else {
+        line.style.animation = `lineSlideRtoL ${duration}s infinite`;
+      }
+
+      document.body.appendChild(line);
+
+      // Reposition after each run
+      line.addEventListener('animationiteration', () => {
+        line.style.top = Math.random() * 100 + 'vh';
+      });
+    }
+  </script>
+</body>
+</html>
